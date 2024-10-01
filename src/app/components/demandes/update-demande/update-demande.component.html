@@ -1,0 +1,4 @@
+<div class="container">
+    <app-demande-form  *ngIf="demande" [demande]="demande" (submitForm)="udpateDemande($event)"></app-demande-form>
+    <div *ngIf="!demande">Chargement des données du centre...</div>
+</div>

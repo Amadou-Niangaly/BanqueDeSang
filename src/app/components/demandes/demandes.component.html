@@ -1,0 +1,39 @@
+<div class="container"> 
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Liste des demande</h3>
+        <button class="btn btn-danger" routerLink="/dashboard/add-demande">Add +</button>
+    </div>
+    <div>
+        <app-serch-section></app-serch-section>
+    </div>
+    <div></div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Demandeur</th>
+                <th scope="col">Groupe sanguin</th>
+                <th scope="col">Quantité requise</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Urgence</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let d of demandesWithUser">
+                <th scope="row">{{d.id}}</th>
+                <td>{{d.user?.prenom}} {{d.user?.nom}}</td>
+                <td>{{d.groupeSanguin}}</td>
+                <td>({{d.quantite}} poche)</td>
+                <td>{{d.dateDemande}}</td>
+                <td>{{d.status}}</td>
+                <td>{{d.urgence}}</td>
+                <td>
+                    <button class="btn btn-outline-primary me-2"><i class="bi bi-pencil" routerLink="/edit-demande/{{d.id}}"></i></button>
+                    <button class="btn btn-outline-danger" (click)="deleteDemande(d.id)"><i class="bi bi-trash3"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>

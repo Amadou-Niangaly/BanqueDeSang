@@ -1,0 +1,45 @@
+<form [formGroup]="stockForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col">
+            <label for="centreId">Sélectionnez le Centre ou l'Hôpital</label>
+            <select id="centreId" class="form-control" formControlName="centreId" required>
+                <option value="" disabled>Choisissez un centre ou un hôpital</option>
+                <option *ngFor="let centre of centre" [value]="centre.id">{{ centre.nom }}</option>
+                <option *ngFor="let hopital of hopitaux" [value]="hopital.id">{{ hopital.nom }}</option>
+            </select>
+            <div *ngIf="stockForm.get('centreId')?.invalid && stockForm.get('centreId')?.touched" class="text-danger">
+              La sélection est requise.
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label for="groupeSanguin">Groupe Sanguin</label>
+            <select id="groupeSanguin" class="form-control" formControlName="groupeSanguin" required>
+                <option value="" disabled>Choisissez un groupe sanguin</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+            <div *ngIf="stockForm.get('groupeSanguin')?.invalid && stockForm.get('groupeSanguin')?.touched" class="text-danger">
+              Le groupe sanguin est requis.
+            </div>
+        </div>
+
+        <div class="col">
+            <label for="quantite">Quantité (en ml)</label>
+            <input type="number" id="quantite" class="form-control" formControlName="quantite" placeholder="Quantité" required>
+            <div *ngIf="stockForm.get('quantite')?.invalid && stockForm.get('quantite')?.touched" class="text-danger">
+              La quantité est requise.
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+</form>

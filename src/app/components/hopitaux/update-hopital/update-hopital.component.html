@@ -1,0 +1,6 @@
+<div class="container">
+    <h3 style="text-align: center;">Modifier le Centre</h3>
+    <app-hopital-form *ngIf="hopital" [hopital]="hopital" (submitForm)="updateHopital($event)"></app-hopital-form>
+    <div *ngIf="!hopital">Chargement des données du centre...</div>
+  </div>
+  

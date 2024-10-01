@@ -1,0 +1,7 @@
+<!-- update-utilisateur.component.html -->
+<div class="container" *ngIf="utilisateur">
+  <app-user-form 
+      [utilisateur]="utilisateur" 
+      (formSubmit)="updateUtilisateur($event)">
+  </app-user-form>
+</div>

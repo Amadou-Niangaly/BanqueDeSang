@@ -1,0 +1,52 @@
+<form [formGroup]="centreForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+      <div class="col">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" class="form-control" formControlName="nom" placeholder="Nom">
+          <div *ngIf="centreForm.get('nom')?.invalid && centreForm.get('nom')?.touched" class="text-danger">
+            Le nom est requis.
+        </div>
+      </div>
+      <div class="col">
+          <label for="adresse">Adresse</label>
+          <input type="text" id="adresse" class="form-control" formControlName="adresse" placeholder="Adresse">
+          <div *ngIf="centreForm.get('adresse')?.invalid && centreForm.get('adresse')?.touched" class="text-danger">
+            L'adresse est requise.
+        </div>
+
+      </div>
+  </div>
+  <div class="row">
+      <div class="col">
+          <label for="localisation">Localisation</label>
+          <input type="text" id="localisation" class="form-control" formControlName="localisation" placeholder="Localisation">
+          <div *ngIf="centreForm.get('localisation')?.invalid && centreForm.get('localisation')?.touched" class="text-danger">
+            La localisation est requis.
+        </div>
+
+      </div>
+      <div class="col">
+          <label for="telephone">Téléphone</label>
+          <input type="tel" id="telephone" class="form-control" formControlName="telephone" placeholder="Téléphone">
+          <div *ngIf="centreForm.get('telephone')?.invalid && centreForm.get('telephone')?.touched" class="text-danger">
+            Le Telephone est requis.
+        </div>
+
+      </div>
+  </div>
+  <div class="row">
+      <div class="col">
+          <label for="heureOuverture">Heure d'ouverture</label>
+          <input type="text" id="heureOuverture" class="form-control" formControlName="heureOuverture" placeholder="Heure d'ouverture">
+          <div *ngIf="centreForm.get('heureOuverture')?.invalid && centreForm.get('heureOuverture')?.touched" class="text-danger">
+            L'heure est requise.
+        </div>
+
+      </div>
+      <div class="col">
+          <label for="stockActuel">Stock Actuel</label>
+          <input type="number" id="stockActuel" class="form-control" formControlName="stockActuel" placeholder="Stock actuel">
+      </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Enregistrer</button>
+</form>

@@ -1,0 +1,81 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col">
+      <label for="nom">Nom</label>
+      <input type="text" id="nom" class="form-control" formControlName="nom" placeholder="Nom">
+    </div>
+    <div class="col">
+      <label for="dateNaissance">Date de naissance</label>
+      <input type="date" id="dateNaissance" class="form-control" formControlName="dateNaissance">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <label for="prenom">Prénom</label>
+      <input type="text" id="prenom" class="form-control" formControlName="prenom" placeholder="Prénom">
+    </div>
+    <div class="col">
+      <label for="telephone">Téléphone</label>
+      <input type="tel" id="telephone" class="form-control" formControlName="telephone" placeholder="Téléphone">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <label for="email">Email</label>
+      <input type="email" id="email" class="form-control" formControlName="email" placeholder="Email">
+    </div>
+    <div class="col">
+      <label for="password">Password</label>
+      <input type="password" id="password" class="form-control" formControlName="password" placeholder="password">
+    </div>
+    <div class="col">
+      <label for="localisation">Localisation</label>
+      <input type="text" id="localisation" class="form-control" formControlName="localisation" placeholder="Localisation">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <label for="role">Rôle</label>
+      <select id="role" class="form-control" formControlName="role" (change)="onRoleChange()">
+        <option value="admin">Admin</option>
+        <option value="donneur">Donneur</option>
+        <option value="patient">Patient</option>
+        <option value="admin hopital">Administrateur Hopital</option>
+        <option value="admin centre">Administrateur Centre</option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="groupeSanguin">Groupe Sanguin</label>
+      <select id="groupeSanguin" class="form-control" formControlName="groupeSanguin">
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+    
+      <select id="hopitalId" class="form-control" formControlName="hopitalId" *ngIf="userForm.get('role')?.value === 'admin hopital'">
+        <label for="hopitalId">Hôpital</label>
+        <option value="">Sélectionner un hôpital</option>
+        <option *ngFor="let hopital of hopitaux" [value]="hopital.id">{{ hopital.nom }}</option>
+      </select>
+    </div>
+    <div class="col" *ngIf="userForm.get('role')?.value === 'admin centre'">
+      <label for="centreId">Centre de Don</label>
+      <select id="centreId" formControlName="centreId" class="form-control">
+        <option value="">Sélectionner un centre</option>
+        <option *ngFor="let centre of centreDon" [value]="centre.id">{{ centre.nom }}</option>
+      </select>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Enregistrer</button>
+</form>

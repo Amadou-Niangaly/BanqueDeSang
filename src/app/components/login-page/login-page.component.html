@@ -1,0 +1,51 @@
+<section class="vh-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <h3 class="mb-5">Sign in</h3>
+
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input 
+                  type="email" 
+                  id="typeEmailX-2" 
+                  class="form-control form-control-lg" 
+                  placeholder="Email" 
+                  formControlName="email" 
+                />
+                <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                  <small *ngIf="loginForm.get('email')?.errors?.['required']" class="text-danger">Email est requis.</small>
+                  <small *ngIf="loginForm.get('email')?.errors?.['email']" class="text-danger">Email est invalide.</small>
+                </div>
+              </div>
+              
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input 
+                  type="password" 
+                  id="typePasswordX-2" 
+                  class="form-control form-control-lg" 
+                  placeholder="Password" 
+                  formControlName="password" 
+                />
+                <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                  <small *ngIf="loginForm.get('password')?.errors?.['required']" class="text-danger">Mot de passe est requis.</small>
+                </div>
+              </div>
+              
+              <button 
+                data-mdb-button-init 
+                data-mdb-ripple-init 
+                class="btn btn-danger btn-lg btn-block" 
+                type="submit" 
+                [disabled]="loginForm.invalid"
+              >Login</button>
+              <hr class="my-4">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

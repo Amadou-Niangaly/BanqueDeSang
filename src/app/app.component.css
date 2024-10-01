@@ -1,0 +1,89 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 16.66667%; /* This corresponds to col-md-2 */
+    background-color: #fff;
+    padding-top: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensures the sidebar stays on top */
+}
+.sidebar a {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex; /* Utilisation de flexbox pour aligner les éléments */
+   /* text-align: center;  */
+    color:var(--accent-color);
+   
+    align-items: center;
+    text-decoration: none; /* Enlever le soulignement */
+    font-size: 12px;
+    padding: 5px 0;
+}
+.sidebar a i {
+   
+    font-size: 14px; /* Taille uniforme des icônes */
+    margin-right: 10px; /* Espace entre l'icône et le texte */
+}
+.sidebar a:hover {
+    color:var(--primary-color); /* Optionnel : changement de couleur au survol */
+}
+/* Ensure the main content does not overlap the sidebar */
+.principal  {
+    margin-left: 16.66667%; /* Offset by the width of the sidebar */
+    padding: 20px; /* Add padding to ensure content isn't touching the edges */
+   margin-right: 50px;
+}
+.logo{
+    width: 100px;
+    height: 100px;
+}
+.menu{
+    margin:25px;
+}
+.logout {
+    position: absolute;
+    bottom: 20px; /* Ajuste la distance par rapport au bas */
+    width: 100%;
+    text-align: center; /* Centrer l'icône */
+  }
+.logout a {
+    color: var(--accent-color); /* Couleur de l'icône et du texte */
+    text-decoration: none;
+  }
+  .logout a:hover {
+    color: var(--primary-color); /* Couleur de survol */
+  }
+  hr{
+    color: var(--accent-color);
+  }
+  .header {
+    background-color: #fff;
+    height: 60px;
+  }
+  .notification i {
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .profile {
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .profile-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .main-content{
+    padding: 20px;
+    overflow-x: hidden;
+  }

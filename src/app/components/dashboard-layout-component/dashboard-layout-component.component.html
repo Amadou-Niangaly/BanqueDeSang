@@ -1,0 +1,42 @@
+<div class="container-fluid principal p-0">
+    <div class="row g-0">
+      <!-- Sidebar -->
+      <div class="col-md-2 sidebar">
+        <div class="text-center mb-4">
+          <img class="logo" src="assets/joolidi.png" alt="logo joolidi">
+          <hr>
+        </div>
+        <div class="menu">
+          <a routerLink="/dashboard/accueil"><i class="bi bi-house"></i> Acceuil</a>
+          <a routerLink="/dashboard/utilisateurs"><i class="bi bi-person"></i> Utilisateurs</a>
+          <a routerLink="/dashboard/dons"><i class="bi bi-clipboard2-heart"></i> Dons</a>
+          <a routerLink="/dashboard/centre-dons"><i class="bi bi-bank"></i> Centre de don</a>
+          <a routerLink="/dashboard/demandes"><i class="bi bi-envelope-arrow-up"></i> Demandes</a>
+          <a routerLink="/dashboard/hopitaux"><i class="bi bi-hospital"></i> Hopitaux</a>
+          <a routerLink="/dashboard/stocks"><i class="bi bi-bar-chart"></i> Stocks</a>
+          <div class="/dashboard/logout">
+            <a (click)="logout()"><i class="bi bi-box-arrow-left"></i> Déconnexion</a>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Main content with header -->
+      <div class="col-md-10 p-0 content-area">
+        <!-- Header with notification and profile -->
+        <div class="header d-flex justify-content-end align-items-center p-2">
+          <div class="notification me-3">
+            <i class="bi bi-bell"></i>
+          </div>
+          <div *ngIf="user" class="me-2">
+            <img src="assets/default.jpg" alt="" class="profile-img me-2">
+            <span>{{ user.nom }} {{ user.prenom }}</span>
+          </div>
+        </div>
+        <!-- Content -->
+        <div class="main-content">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+  

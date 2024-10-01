@@ -1,0 +1,38 @@
+<div class="container">
+    <h2>Formulaire de Demande de Sang</h2>
+    <form [formGroup]="demandeForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="groupeSanguin">Groupe Sanguin:</label>
+            <select id="groupeSanguin" formControlName="groupeSanguin" class="form-control" required>
+                <option value="">Sélectionnez un groupe sanguin</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+            <div *ngIf="demandeForm.get('groupeSanguin')?.invalid && (demandeForm.get('groupeSanguin')?.touched || demandeForm.get('groupeSanguin')?.dirty)">
+                <small class="text-danger">Le groupe sanguin est requis.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="quantite">Quantité (en poche):</label>
+            <input type="number" id="quantite" formControlName="quantite" class="form-control" required>
+            <div *ngIf="demandeForm.get('quantite')?.invalid && (demandeForm.get('quantite')?.touched || demandeForm.get('quantite')?.dirty)">
+                <small class="text-danger">La quantité est requise.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="urgence">Urgence:</label>
+            <input type="checkbox" id="urgence" formControlName="urgence">
+            <label for="urgence">Cochez si urgent</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Soumettre</button>
+    </form>
+</div>

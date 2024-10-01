@@ -1,0 +1,31 @@
+.items{
+    background-color: #fff;
+    width: 15em;
+    height: 6em;
+    border-radius: 15px;
+    margin: 0;
+    padding: 10px;
+
+}
+.positif-div{
+  width: 3em;
+  height: 1.2em;
+  background-color:rgba(15, 175, 88, 0.3);
+  border-radius: 5px;
+  color: rgba(15, 175, 88);
+}
+.positif{
+    font-size: 12px;
+}
+.negatif-div{
+    width: 3em;
+    height: 1.2em;
+    background-color: rgb(233, 63, 63,0.3);
+    color: rgb(233, 63, 63);
+    border-radius: 5px;
+}
+canvas {
+    width: 100% !important;
+    max-width: 600px;
+    height: 400px !important;
+  }

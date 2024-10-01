@@ -1,0 +1,4 @@
+<div>
+    <app-don-form *ngIf="don" [don]="don" (submitForm)="udpateDon($event)"></app-don-form>
+    <div *ngIf="!don">Chargement des données du centre...</div>
+</div>

@@ -1,0 +1,6 @@
+<div class="container">
+    <h3 style="text-align: center;">Modifier le Centre</h3>
+    <app-centre-form *ngIf="centreDon" [centreDon]="centreDon" (submitForm)="updateCentre($event)"></app-centre-form>
+    <div *ngIf="!centreDon">Chargement des données du centre...</div>
+  </div>
+  
