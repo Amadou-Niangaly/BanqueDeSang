@@ -4,6 +4,7 @@ import { DemandeService } from '../../../services/demande.service';
 import { Router } from '@angular/router';
 import { Demande } from '../../../interfaces/demande';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NotificationsService } from '../../../services/notifications.service';
 
 @Component({
   selector: 'app-add-demande',
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class AddDemandeComponent {
      constructor(
       private demandeService:DemandeService,
-      private router:Router
+      private router:Router,
+      private notificationsService:NotificationsService
      ){}
   addDemande(demande:Demande){
     console.log('données de la demande:',demande);
@@ -23,6 +25,9 @@ export class AddDemandeComponent {
     this.demandeService.addDemande(demande)
     .then(()=>{
       console.log('demande ajouté avec succès');
+      //Envoi notif aux users
+
+     
       //redirection
       this.router.navigate(['dasboard/demandes'])
     })

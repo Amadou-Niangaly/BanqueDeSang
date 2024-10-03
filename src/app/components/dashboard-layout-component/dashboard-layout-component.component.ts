@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { Utilisateur } from '../../interfaces/utilisateur';
 import { CommonModule } from '@angular/common';
 import { NotificationsComponent } from '../notifications/notifications.component';
+import { NotificationsService } from '../../services/notifications.service';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class DashboardLayoutComponentComponent  implements OnInit{
     imgProfil="assets/default.png"
   constructor(
     private authService: AuthService, private router: Router,
+    private notificationsService:NotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +33,8 @@ export class DashboardLayoutComponentComponent  implements OnInit{
       console.log('Données utilisateur dans le composant:', userData); // Ajoutez ce log
       this.user = userData; // Met à jour l'utilisateur à partir des données récupérées
     });
+    //demande de permission pour les notifications
+    this.notificationsService.requestPermission();
       
   }
 

@@ -4,6 +4,7 @@ import { UtilisateursService } from '../../../services/utilisateurs.service';
 import { CommonModule } from '@angular/common';
 import { UserFormComponent } from "../user-form/user-form.component";
 import { Router } from '@angular/router';
+import { NotificationsService } from '../../../services/notifications.service';
 
 @Component({
   selector: 'app-add-utilisateur',
@@ -17,7 +18,8 @@ export class AddUtilisateurComponent implements OnInit {
   constructor(
    private fb:FormBuilder,
    private utilisateurService:UtilisateursService,
-   private router:Router
+   private router:Router,
+   private notificationsService:NotificationsService
   ) {}
   ngOnInit(): void {
     //initialisation
@@ -32,16 +34,28 @@ export class AddUtilisateurComponent implements OnInit {
          groupeSanguin: ['O+', Validators.required] 
       });
   }
-  //soumission du formulaire
+
     // Méthode pour soumettre le formulaire
-    onSubmit(userData: any) {
-      this.utilisateurService.addUtilisateur(userData)
-        .then(() => {
+    async onSubmit(userData: any) {
+      try {
+        // Demande de permission pour les notifications
+        await this.notificationsService.requestPermission();
+    
+        // Une fois la permission accordée, obtenir le token FCM
+        const token = await this.notificationsService.getToken();
+    
+        if (token) {
+          userData.fcmToken = token; // Ajouter le token FCM aux données de l'utilisateur
+    
+          await this.utilisateurService.addUtilisateur(userData);
           console.log('Utilisateur ajouté avec succès!');
-          this.router.navigate(['dashboard/utilisateurs'])
-        })
-        .catch((error) => {
-          console.error('Erreur lors de l\'ajout de l\'utilisateur :', error);
-        });
+          this.router.navigate(['dashboard/utilisateurs']);
+        } else {
+          console.log('Token FCM non récupéré.');
+        }
+      } catch (error) {
+        console.error('Erreur lors de la soumission du formulaire:', error);
+      }
     }
-  }
+    
+}

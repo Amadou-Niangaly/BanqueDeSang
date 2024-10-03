@@ -15,4 +15,5 @@ export interface Utilisateur {
     centreId?: string; // Référence au centre de don si applicable
     password:string;
     dateNaissance?:string;
+    fcmToken?: string;
 }
