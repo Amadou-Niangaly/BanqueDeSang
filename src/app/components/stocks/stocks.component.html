@@ -3,9 +3,25 @@
         <h3>Liste des stocks</h3>
         <button class="btn btn-danger" routerLink="/add-stock">Add +</button>
     </div>
-    <div>
-        <app-serch-section></app-serch-section>
-    </div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <app-serch-section  (searchChanged)="onSearchTextChange($event)"></app-serch-section>
+        <!-- Section de filtre -->
+    <div class="ms-3">
+      <select class="form-select" aria-label="Filter" 
+      [(ngModel)]="filterCriteria" (ngModelChange)="onFilterChange($event)">
+        <option value="">Filtrer par</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <!-- Ajoute d'autres groupes sanguins si nécessaire -->
+    </select>
+  </div>
+  </div>
     <div></div>
     <table class="table">
       <thead>
@@ -17,12 +33,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let stock of stock">
+        <tr *ngFor="let stock of stock |filter:searchText:filterCriteria">
           <th scope="row">{{ stock.id }}</th>
           <td>{{ getCentreOrHopitalName(stock.centreId) }}</td>
           <td>{{ stock.quantite }} ({{ stock.groupeSanguin }})</td>
           <td>
-            <button class="btn btn-outline-primary me-2" routerLink="/edit-stock/{{ stock.id }}">
+            <button class="btn btn-outline-primary me-2" routerLink="/dashboard/edit-stock/{{ stock.id }}">
               <i class="bi bi-pencil"></i>
             </button>
             <button class="btn btn-outline-danger" (click)="deleteCentre(stock.id)">

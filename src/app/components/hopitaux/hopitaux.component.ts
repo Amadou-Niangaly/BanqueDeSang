@@ -4,16 +4,18 @@ import { RouterLink } from '@angular/router';
 import { Hopital } from '../../interfaces/hopital';
 import { HopitalService } from '../../services/hopital.service';
 import { CommonModule } from '@angular/common';
+import { FilterPipe } from '../../filter.pipe';
 
 @Component({
   selector: 'app-hopitaux',
   standalone: true,
-  imports: [SerchSectionComponent,RouterLink,CommonModule],
+  imports: [SerchSectionComponent,RouterLink,CommonModule,FilterPipe],
   templateUrl: './hopitaux.component.html',
   styleUrl: './hopitaux.component.css'
 })
 export class HopitauxComponent implements OnInit{
   hopitaux:Hopital[]=[];
+  searchText:any;
   constructor(private hopitalService:HopitalService){}
 
 ngOnInit(): void {
@@ -42,6 +44,9 @@ async  loadHopitaux() {
       console.log('Suppression annulée.');
     }
   }
-
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+    // Appliquer le filtrage ici
+  }
 }
 

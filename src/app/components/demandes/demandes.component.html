@@ -4,7 +4,7 @@
         <button class="btn btn-danger" routerLink="/dashboard/add-demande">Add +</button>
     </div>
     <div>
-        <app-serch-section></app-serch-section>
+        <app-serch-section (searchChanged)="onSearchTextChange($event)"></app-serch-section>
     </div>
     <div></div>
         <table class="table">
@@ -21,7 +21,7 @@
               </tr>
             </thead>
             <tbody >
-              <tr *ngFor="let d of demandesWithUser">
+              <tr *ngFor="let d of demandesWithUser |filter:searchText">
                 <th scope="row">{{d.id}}</th>
                 <td>{{d.user?.prenom}} {{d.user?.nom}}</td>
                 <td>{{d.groupeSanguin}}</td>

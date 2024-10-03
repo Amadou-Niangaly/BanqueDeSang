@@ -3,7 +3,7 @@ export interface Utilisateur {
     nom?: string; 
     prenom?: string;
     email: string; 
-    role?: 'Donneur' | 'Patient' | 'Admin' | 'Hôpital' | 'Centre'; 
+    role: 'admin' | 'admin centre' | 'admin hopital';
     typeEntite?: 'Hôpital' | 'Centre de Don'; // Type d'entité (facultatif)
     groupeSanguin?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-'; // Groupe sanguin
     localisation?: string; 

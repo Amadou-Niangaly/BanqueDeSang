@@ -11,11 +11,12 @@ import { CentreDonService } from '../../services/centre-don.service';
 import { Hopital } from '../../interfaces/hopital';
 import { StockService } from '../../services/stock.service';
 import { HopitalService } from '../../services/hopital.service';
+import { FilterPipe } from '../../filter.pipe';
 
 @Component({
   selector: 'app-dons',
   standalone: true,
-  imports: [RouterLink, SerchSectionComponent,CommonModule],
+  imports: [RouterLink, SerchSectionComponent,CommonModule,FilterPipe],
   templateUrl: './dons.component.html',
   styleUrl: './dons.component.css'
 })
@@ -25,6 +26,7 @@ export class DonsComponent implements OnInit{
   utilisateur:Utilisateur[]=[];
   centre:CentreDon[]=[];
   hopital:Hopital[]=[];
+  searchText:any;
   constructor(
     private donService:DonService,
     private utilisateurService:UtilisateursService,
@@ -115,6 +117,10 @@ export class DonsComponent implements OnInit{
     } else {
       console.log('Suppression annulée.');
     }
+  }
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+    // Appliquer le filtrage ici
   }
 }
 

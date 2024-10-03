@@ -3,18 +3,25 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Utilisateur } from '../../interfaces/utilisateur';
 import { CommonModule } from '@angular/common';
-import { StatsComponent } from '../Statistiques/stats/stats.component';
+import { NotificationsComponent } from '../notifications/notifications.component';
+
 
 @Component({
   selector: 'app-dashboard-layout-component',
   standalone: true,
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule,CommonModule,NotificationsComponent],
   templateUrl: './dashboard-layout-component.component.html',
   styleUrl: './dashboard-layout-component.component.css'
 })
 export class DashboardLayoutComponentComponent  implements OnInit{
   user: Utilisateur | null = null;
-  imgProfil="assets/default.png"
+    // Variables pour gérer la visibilité des sections
+    canManageCentre: boolean = false;
+    canManageHopital: boolean = false;
+    canSeeAllData: boolean = false;
+    isModalOpen = false;
+
+    imgProfil="assets/default.png"
   constructor(
     private authService: AuthService, private router: Router,
   ) {}
@@ -39,5 +46,43 @@ export class DashboardLayoutComponentComponent  implements OnInit{
     }
   }
 
+   // Applique les restrictions selon le rôle de l'utilisateur
+   applyRoleRestrictions() {
+    if (!this.user) {
+      return;
+    }
 
+    switch (this.user.role) {
+      case 'admin':
+        this.canManageCentre = true;
+        this.canManageHopital = true;
+        this.canSeeAllData = true;
+        break;
+      case 'admin centre':
+        this.canManageCentre = true;
+        this.canManageHopital = false;
+        this.canSeeAllData = false;
+        break;
+      case 'admin hopital':
+        this.canManageCentre = false;
+        this.canManageHopital = true;
+        this.canSeeAllData = false;
+        break;
+      default:
+        // Par défaut, on masque tout
+        this.canManageCentre = false;
+        this.canManageHopital = false;
+        this.canSeeAllData = false;
+    }
+  }
+ 
+  notifications = [
+    { message: 'Nouvelle demande de don.', date: new Date() },
+    { message: 'Votre demande a été approuvée.', date: new Date() },
+  ];
+
+  openNotificationModal() {
+    this.isModalOpen = true;
+  }
+ 
 }

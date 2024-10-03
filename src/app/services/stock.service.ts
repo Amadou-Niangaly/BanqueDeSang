@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, deleteDoc, doc, Firestore, getDoc, getDocs, getFirestore, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, Firestore, getDoc, getDocs, getFirestore, query, updateDoc, where } from 'firebase/firestore';
 import { app } from '../config/firebase-config';
 import { Stock } from '../interfaces/stock';
 
@@ -109,5 +109,37 @@ async getStock() {
       throw error;
     }
   }
-  
+  // Récupérer les stocks par centre
+  async getStockByCentre(centreId: string) {
+    const coll = collection(this.firestore, 'stock');
+    const q = query(coll, where('centreId', '==', centreId)); // Remplacez 'centreId' par le champ approprié dans votre modèle de données
+
+    try {
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map((doc) => ({
+        id: doc.id, // Inclut l'ID du document
+        ...doc.data(), // Ajoute les données du document
+      })) as Stock[]; // Assurez-vous que les données correspondent à l'interface Stock
+    } catch (error) {
+      console.error('Erreur lors de la récupération des stocks par centre:', error);
+      throw error;
+    }
+  }
+
+  // Récupérer les stocks par hôpital
+  async getStockByHopital(hopitalId: string) {
+    const coll = collection(this.firestore, 'stock');
+    const q = query(coll, where('hopitalId', '==', hopitalId)); // Remplacez 'hopitalId' par le champ approprié dans votre modèle de données
+
+    try {
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map((doc) => ({
+        id: doc.id, // Inclut l'ID du document
+        ...doc.data(), // Ajoute les données du document
+      })) as Stock[]; // Assurez-vous que les données correspondent à l'interface Stock
+    } catch (error) {
+      console.error('Erreur lors de la récupération des stocks par hôpital:', error);
+      throw error;
+    }
+  }
 }

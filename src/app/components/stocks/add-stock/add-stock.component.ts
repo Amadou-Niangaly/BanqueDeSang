@@ -23,7 +23,7 @@ export class AddStockComponent {
      this.stockService.addStock(stock)
      .then(()=>{
       console.log('stock ajouté avec succès!');
-      this.router.navigate(['/stocks'])
+      this.router.navigate(['dashboard/stocks'])
      })
      .catch((error)=>{
       console.error('Erreur lors de l\'ajout du stock:', error);

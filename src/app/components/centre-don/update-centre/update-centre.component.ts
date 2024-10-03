@@ -29,7 +29,7 @@ export class UpdateCentreComponent implements OnInit{
   async updateCentre(updateCentre:Partial<CentreDon>){
     if(this.centreDon && this.centreDon.id){
       await this.centreDonService.updateCentre(this.centreDon.id,updateCentre);
-      this.router.navigate(['/centre-dons']);
+      this.router.navigate(['dashboard/centre-dons']);
     }
     else{
       console.error('l\'ID du centre n\'existe pas');

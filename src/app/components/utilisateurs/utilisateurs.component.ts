@@ -6,17 +6,21 @@ import { getFirestore } from 'firebase/firestore'; // Importer getFirestore
 import { app } from '../../config/firebase-config';
 import { UtilisateursService } from '../../services/utilisateurs.service';
 import { Utilisateur } from '../../interfaces/utilisateur';
+import { FilterPipe } from "../../filter.pipe";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-utilisateurs',
   standalone: true,
-  imports: [SerchSectionComponent,RouterLink,CommonModule],
+  imports: [SerchSectionComponent, RouterLink, CommonModule, FilterPipe,FormsModule],
   templateUrl: './utilisateurs.component.html',
   styleUrl: './utilisateurs.component.css'
 })
 export class UtilisateursComponent implements OnInit {
    private Firestore=getFirestore(app );
    utilisateurs: Utilisateur[] = [];
+   searchText:any;
+   filterCriteria:any;
    constructor(private utiliteurService:UtilisateursService){}
    ngOnInit() {
     this.loadUtilisateurs();
@@ -46,6 +50,14 @@ export class UtilisateursComponent implements OnInit {
     }
   }
 
-  
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+    // Appliquer le filtrage ici
+  }
     
+  onFilterChange(filter: string) {
+    this.filterCriteria = filter;
+    console.log('Critère de filtrage:', this.filterCriteria); 
+  }
+  
 }

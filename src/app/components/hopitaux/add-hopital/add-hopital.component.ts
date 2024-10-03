@@ -23,7 +23,7 @@ export class AddHopitalComponent {
       .then(()=>{
         console.log('hopital ajouté avec succès');
         //redirection
-        this.router.navigate(['/hopitaux'])
+        this.router.navigate(['dashboard/hopitaux'])
 
       })
       .catch((Error)=>{

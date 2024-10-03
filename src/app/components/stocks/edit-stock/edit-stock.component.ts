@@ -29,7 +29,7 @@ export class EditStockComponent  implements OnInit{
 async updateStock(updateStock:Partial<Stock>){
   if(this.stock && this.stock.id){
     await this.stockService.updateStock(this.stock.id,updateStock);
-    this.router.navigate(['/stocks'])
+    this.router.navigate(['dashboard/stocks'])
   }
   else{
     console.error('ID du stock est maquante');

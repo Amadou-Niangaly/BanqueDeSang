@@ -1,0 +1,68 @@
+.container {
+    position: fixed;
+    top: 25%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+  }
+  
+  .modal-title {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .close:hover {
+    color: rgb(255, 0, 0);
+  }
+  
+  .modal-body {
+    margin-top: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .modal-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .modal-body li {
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #555;
+  }
+  
+  .modal-body li:last-child {
+    border-bottom: none;
+  }
+  
+  body {
+    background-color: rgba(0, 0, 0, 0.5); /* Assombrit l'arrière-plan */
+    overflow: hidden; /* Empêche le défilement du corps lorsqu'un modal est actif */
+  }
+  

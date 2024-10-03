@@ -28,7 +28,7 @@ export class UpdateHopitalComponent  implements OnInit{
 async updateHopital(updateHopital:Partial<Hopital>){
   if(this.hopital && this.hopital.id){
     await this.hopitalService.updateHopital(this.hopital.id,updateHopital);
-    this.router.navigate(['/hopitaux']);
+    this.router.navigate(['dashboard/hopitaux']);
   }
   else{
     console.error('l\'ID de l\'hopital est manquante');

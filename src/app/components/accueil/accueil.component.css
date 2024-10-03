@@ -24,8 +24,6 @@
     color: rgb(233, 63, 63);
     border-radius: 5px;
 }
-canvas {
-    width: 100% !important;
-    max-width: 600px;
-    height: 400px !important;
-  }
+.container{
+    width: 100%;
+}

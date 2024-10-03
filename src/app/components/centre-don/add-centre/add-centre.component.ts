@@ -23,7 +23,7 @@ export class AddCentreComponent  {
     .then(() => {
       console.log('Centre ajouté avec succès !');
       // Redirection ou message de confirmation
-      this.router.navigate(['/centre-dons']); 
+      this.router.navigate(['dashboard/centre-dons']); 
     })
     .catch((error) => {
       console.error('Erreur lors de l\'ajout du centre:', error);

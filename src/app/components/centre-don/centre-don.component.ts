@@ -4,16 +4,18 @@ import { RouterLink } from '@angular/router';
 import { CentreDon } from '../../interfaces/centre-don';
 import { CentreDonService } from '../../services/centre-don.service';
 import { CommonModule } from '@angular/common';
+import { FilterPipe } from '../../filter.pipe';
 
 @Component({
   selector: 'app-centre-don',
   standalone: true,
-  imports: [SerchSectionComponent,RouterLink,CommonModule],
+  imports: [SerchSectionComponent,RouterLink,CommonModule,FilterPipe],
   templateUrl: './centre-don.component.html',
   styleUrl: './centre-don.component.css'
 })
 export class CentreDonComponent implements OnInit{
   centres:CentreDon[]=[];
+  searchText:any;
   constructor(
     private centreDonService:CentreDonService
   ){}
@@ -42,5 +44,9 @@ export class CentreDonComponent implements OnInit{
     } else {
       console.log('Suppression annulée.');
     }
+  }
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+    // Appliquer le filtrage ici
   }
 }

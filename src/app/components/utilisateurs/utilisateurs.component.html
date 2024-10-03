@@ -3,8 +3,24 @@
       <h3>Liste des utilisateurs</h3>
       <button class="btn btn-danger" routerLink="/dashboard/add-user">Add +</button>
   </div>
-  <div>
-      <app-serch-section></app-serch-section>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+      <app-serch-section  (searchChanged)="onSearchTextChange($event)"></app-serch-section>
+        <!-- Section de filtre -->
+    <div class="ms-3">
+      <select class="form-select" aria-label="Filter" 
+      [(ngModel)]="filterCriteria" (ngModelChange)="onFilterChange($event)">
+        <option value="">Filtrer par</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <!-- Ajoute d'autres groupes sanguins si nécessaire -->
+    </select>
+  </div>
   </div>
   <div>
       <table class="table">
@@ -22,7 +38,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let utilisateur of utilisateurs">
+            <tr *ngFor="let utilisateur of utilisateurs |filter: searchText:filterCriteria">
               <th scope="row">{{ utilisateur.id }}</th>
               <td>{{ utilisateur.prenom }}</td>
               <td>{{ utilisateur.nom }}</td>

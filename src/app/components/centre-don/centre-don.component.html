@@ -5,7 +5,7 @@
       <button class="btn btn-danger" routerLink="/add-centre">Ajouter +</button>
   </div>
   <div>
-      <app-serch-section></app-serch-section>
+      <app-serch-section (searchChanged)="onSearchTextChange($event)"></app-serch-section>
   </div>
   <table class="table">
       <thead>
@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let centre of centres">
+        <tr *ngFor="let centre of centres |filter:searchText">
           <th scope="row">{{ centre.id }}</th>
           <td>{{ centre.nom }}</td>
           <td>{{ centre.adresse }}</td>

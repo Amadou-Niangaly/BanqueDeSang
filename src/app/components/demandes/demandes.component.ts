@@ -6,11 +6,12 @@ import { Utilisateur } from '../../interfaces/utilisateur';
 import { DemandeService } from '../../services/demande.service';
 import { UtilisateursService } from '../../services/utilisateurs.service';
 import { CommonModule } from '@angular/common';
+import { FilterPipe } from '../../filter.pipe';
 
 @Component({
   selector: 'app-demandes',
   standalone: true,
-  imports: [SerchSectionComponent,RouterLink,CommonModule],
+  imports: [SerchSectionComponent,RouterLink,CommonModule,FilterPipe],
   templateUrl: './demandes.component.html',
   styleUrl: './demandes.component.css'
 })
@@ -18,6 +19,7 @@ export class DemandesComponent implements OnInit{
   demande:Demande[]=[];
   demandesWithUser: (Demande & { user?: any })[] = [];
   utilisateur:Utilisateur[]=[];
+  searchText:any;
   constructor(
     private demandeService:DemandeService,
     private utilisateurService:UtilisateursService
@@ -64,5 +66,9 @@ export class DemandesComponent implements OnInit{
     } else {
       console.log('Suppression annulée.');
     }
+  }
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+    // Appliquer le filtrage ici
   }
 }
