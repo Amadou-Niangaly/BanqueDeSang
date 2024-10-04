@@ -34,7 +34,6 @@ export class DashboardLayoutComponentComponent  implements OnInit{
       this.user = userData; // Met à jour l'utilisateur à partir des données récupérées
     });
     //demande de permission pour les notifications
-    this.notificationsService.requestPermission();
       
   }
 

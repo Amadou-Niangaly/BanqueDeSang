@@ -41,19 +41,20 @@ async addUtilisateur(utilisateur: Utilisateur): Promise<void> {
     // Créez un document avec l'UID comme identifiant
     const userDocRef = doc(this.firestore, 'utilisateurs', userCredential.user.uid);
     
-    // Assurez-vous que toutes les données nécessaires sont présentes
+    // Assurez-vous que toutes les données nécessaires sont présentes, y compris le token
     await setDoc(userDocRef, {
-      id: userCredential.user.uid, // Stockez l'UID
-      email: utilisateur.email,     // Assurez-vous que email est présent
-      nom: utilisateur.nom,         // Assurez-vous que nom est présent
-      prenom: utilisateur.prenom,   // Assurez-vous que prenom est présent
-      dateNaissance: utilisateur.dateNaissance, // Assurez-vous que cette propriété est présente
-      telephone: utilisateur.telephone,         // Assurez-vous que cette propriété est présente
-      localisation: utilisateur.localisation,   // Assurez-vous que cette propriété est présente
-      role: utilisateur.role,                   // Assurez-vous que cette propriété est présente
-      groupeSanguin: utilisateur.groupeSanguin, // Assurez-vous que cette propriété est présente
-      centreId: utilisateur.centreId || '',    // Assurez-vous que cette propriété est présente (optionnelle)
-      hopitalId: utilisateur.hopitalId || ''   // Assurez-vous que cette propriété est présente (optionnelle)
+      id: userCredential.user.uid,
+      email: utilisateur.email,
+      nom: utilisateur.nom,
+      prenom: utilisateur.prenom,
+      dateNaissance: utilisateur.dateNaissance,
+      telephone: utilisateur.telephone,
+      localisation: utilisateur.localisation,
+      role: utilisateur.role,
+      groupeSanguin: utilisateur.groupeSanguin,
+      token: utilisateur.token, // Ajoutez le token ici
+      centreId: utilisateur.centreId || '',
+      hopitalId: utilisateur.hopitalId || ''
     });
 
     console.log('Utilisateur ajouté avec succès');

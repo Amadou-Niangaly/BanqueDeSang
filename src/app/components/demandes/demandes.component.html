@@ -10,7 +10,7 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">ID</th>
+                <!-- <th scope="col">ID</th> -->
                 <th scope="col">Demandeur</th>
                 <th scope="col">Groupe sanguin</th>
                 <th scope="col">Quantité requise</th>
@@ -22,7 +22,7 @@
             </thead>
             <tbody >
               <tr *ngFor="let d of demandesWithUser |filter:searchText">
-                <th scope="row">{{d.id}}</th>
+                <!-- <th scope="row">{{d.id}}</th> -->
                 <td>{{d.user?.prenom}} {{d.user?.nom}}</td>
                 <td>{{d.groupeSanguin}}</td>
                 <td>({{d.quantite}} poche)</td>

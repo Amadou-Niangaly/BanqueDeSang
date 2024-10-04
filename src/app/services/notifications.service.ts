@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { getMessaging,getToken } from 'firebase/messaging';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { firebaseConfig } from '../config/firebase-config';
 
 @Injectable({
   providedIn: 'root'
@@ -8,37 +9,92 @@ export class NotificationsService {
   private messaging;
 
   constructor() {
-    this.messaging=getMessaging();
-   }
+    this.messaging = getMessaging();
+    this.init(); // Initialiser l'écouteur de messages
+  }
 
-   requestPermission() {
-    console.log('Requesting permission...');
-    Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
-        console.log('Notification permission granted.');
-        this.getToken();
+  init() {
+    onMessage(this.messaging, (payload) => {
+      console.log('Message reçu. ', payload);
+      
+      // Vérifiez si le payload contient une notification
+      if (payload.notification) {
+        // Utilisez les propriétés de notification uniquement si elles existent
+        const title = payload.notification.title || 'Notification';
+        const body = payload.notification.body || 'Vous avez reçu une nouvelle notification.';
+        
+        this.showNotification(title, body);
       } else {
-        console.log('Notification permission denied.');
+        console.warn('Notification manquante dans le payload:', payload);
       }
-    }).catch((err) => {
-      console.error('Error requesting notification permission:', err);
     });
   }
-  getToken(): Promise<string> {
-    return getToken(this.messaging, { vapidKey: 'N7aAVIcL9M9ECX1gL6kQ03cJ9MYI_34rcc2LBfqkJ-8' })
-      .then((currentToken) => {
-        if (currentToken) {
-          console.log('Current token:', currentToken);
-          return currentToken; // Retourner le token
-        } else {
-          console.log('No registration token available. Request permission to generate one.');
-          return ''; // Retourner une chaîne vide si aucun token n'est disponible
-        }
-      }).catch((err) => {
-        console.error('An error occurred while retrieving token:', err);
-        return ''; // Retourner une chaîne vide en cas d'erreur
-      });
-}
 
-  
+  // Méthode pour demander la permission de recevoir des notifications et obtenir le token
+  requestPermission() {
+    return new Promise((resolve, reject) => {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          console.log('Notification permission granted.');
+          getToken(this.messaging, { vapidKey: firebaseConfig.vapidkey })
+            .then((currentToken) => {
+              if (currentToken) {
+                console.log('Token de notification:', currentToken);
+                resolve(currentToken);
+              } else {
+                console.log('No registration token available. Request permission to generate one.');
+                reject('No registration token available.');
+              }
+            })
+            .catch((err) => {
+              console.error('An error occurred while retrieving token: ', err);
+              reject(err);
+            });
+        } else {
+          console.log('Unable to get permission to notify.');
+          reject('Permission denied.');
+        }
+      });
+    });
+  }
+
+  // Méthode pour envoyer une notification
+  async createDemande(notificationData: { token: string; title: string; body: string; }) {
+    try {
+      const response = await fetch('http://localhost:3000/send-notification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(notificationData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erreur lors de l'envoi de la notification: ${response.statusText}`);
+      }
+
+      const responseData = await response.json();
+      console.log('Notification envoyée avec succès:', responseData);
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi de la notification:', error);
+    }
+  }
+
+  showNotification(title: string, body: string) {
+    if (Notification.permission === 'granted') {
+      new Notification(title, {
+        body: body,
+        icon: 'path/to/icon.png' // Remplacez par le chemin vers votre icône
+      });
+    } else if (Notification.permission !== 'denied') {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          new Notification(title, {
+            body: body,
+            icon: 'path/to/icon.png' // Remplacez par le chemin vers votre icône
+          });
+        }
+      });
+    }
+  }
 }

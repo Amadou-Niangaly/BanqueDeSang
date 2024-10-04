@@ -25,11 +25,8 @@ export class AddDemandeComponent {
     this.demandeService.addDemande(demande)
     .then(()=>{
       console.log('demande ajouté avec succès');
-      //Envoi notif aux users
-
-     
       //redirection
-      this.router.navigate(['dasboard/demandes'])
+      this.router.navigate(['dashboard/demandes'])
     })
     .catch((Error)=>{
       console.error('erreur lors de l\'ajout de la demande',Error)

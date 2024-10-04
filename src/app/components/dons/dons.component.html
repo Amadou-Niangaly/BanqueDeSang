@@ -10,24 +10,24 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">ID</th>
+                <!-- <th scope="col">ID</th> -->
                 <th scope="col">Donneur</th>
                 <th scope="col">Date don</th>
                 <th scope="col">Centre de don</th>
                 <th scope="col">Quantité(poche)</th>
-                <th scope="col">Status</th>
+                <!-- <th scope="col">Status</th> -->
                 <th scope="col">Groupe Sanguin</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let d of donsWithUser |filter:searchText">
-                <th scope="row">{{d.id}}</th>
+                <!-- <th scope="row">{{d.id}}</th> -->
                 <td>{{d.user.prenom}} {{d.user.nom}}</td>
                 <td>{{d.dateDon}}</td>
                 <td>{{ getCentreOrHopitalName(d.centre) }}</td>
                 <td>{{d.quantite}}</td>
-                <td>{{d.status}}</td>
+                <!-- <td>{{d.status}}</td> -->
                 <td>{{d.groupeSanguin}}</td>
                 <td>
                     <button class="btn btn-outline-primary me-2"><i class="bi bi-pencil" routerLink="/edit-don/{{d.id}}"></i></button>

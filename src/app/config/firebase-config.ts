@@ -10,16 +10,15 @@ import { getMessaging, getToken } from "firebase/messaging";
   storageBucket: "banque-sang-8dc2b.appspot.com",
   messagingSenderId: "549004100569",
   appId: "1:549004100569:web:ef063a06c670480fa18fc8",
-  
+  vapidkey:"BBWxHZ0iT_53R7yA6Optckw1Q1jSWL3BLsX3cY5W8PGpSo7szY2gEwE4HGeiTa6h_8WNqMiL0LPoJuG9F7Jp9qQ"
 };
 
 // Initialize Firebase
  export const app = initializeApp(firebaseConfig);
 
  // Initialize Firebase Cloud Messaging and get a reference to the service
-const messaging = getMessaging(app);
-// Add the public key generated from the console here.
-// Add the public key generated from the console here.
-getToken(messaging, {vapidKey: "N7aAVIcL9M9ECX1gL6kQ03cJ9MYI_34rcc2LBfqkJ-8"});
+const messaging = getMessaging(app)
+getToken(messaging, {vapidKey: ""});
+
 
 

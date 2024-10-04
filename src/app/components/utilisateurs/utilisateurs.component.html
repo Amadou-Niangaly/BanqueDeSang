@@ -26,7 +26,7 @@
       <table class="table">
           <thead>
             <tr>
-              <th scope="col">ID</th>
+              <!-- <th scope="col">ID</th> -->
               <th scope="col">Prenom</th>
               <th scope="col">Nom</th>
               <th scope="col">Telephone</th>
@@ -39,7 +39,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let utilisateur of utilisateurs |filter: searchText:filterCriteria">
-              <th scope="row">{{ utilisateur.id }}</th>
+              <!-- <th scope="row">{{ utilisateur.id }}</th> -->
               <td>{{ utilisateur.prenom }}</td>
               <td>{{ utilisateur.nom }}</td>
               <td>{{ utilisateur.telephone }}</td>

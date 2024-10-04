@@ -3,13 +3,17 @@ import { addDoc, collection, deleteDoc, doc, Firestore, getDoc, getDocs, getFire
 import { app } from '../config/firebase-config';
 import { Demande } from '../interfaces/demande';
 import { AuthService } from './auth.service';
+import { NotificationsService } from './notifications.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DemandeService {
   private firestore:Firestore;
-  constructor(private authService:AuthService) {
+  constructor(
+    private authService:AuthService,
+    private notificationsService:NotificationsService
+  ) {
     //initialiser firestore
     this.firestore=getFirestore(app);
    }
@@ -27,17 +31,48 @@ async getDemande() {
     throw error;
   }
 }
-  //ajouter une demande
-  async addDemande(demande:Demande){
-    try {
-      const coll=collection(this.firestore,'demande');
-      await addDoc(coll,demande);
-      console.log('Demande ajouté avec succès')
-    } catch (error) {
-      console.error('Erreur lors de l\'ajout de la demande:', error);
-      throw error;
+// Ajouter une demande
+async addDemande(demande: Demande) {
+  try {
+    const coll = collection(this.firestore, 'demande');
+    const docRef = await addDoc(coll, demande);
+    console.log('Demande ajoutée avec succès');
+
+    // Récupérer le token FCM et envoyer la notification
+    const token = await this.notificationsService.requestPermission();
+
+    // Vérifiez si le token est valide (non vide et de type string)
+    if (typeof token !== 'string' || token.trim() === '') {
+      console.error('Token de notification non valide');
+      return; // Sortir si le token n'est pas valide
     }
+
+    // Vérifiez que userId est défini
+    if (!demande.userId) {
+      console.error('userId est requis pour envoyer la notification.');
+      return; // Sortir si userId n'est pas défini
+    }
+
+    // Récupérer le nom de l'utilisateur basé sur l'ID de l'utilisateur
+    const user = await this.authService.getUserData(demande.userId);
+    const userName = user?.nom || 'Un utilisateur'; // Utilise le nom de l'utilisateur ou une valeur par défaut
+
+    const notificationData = {
+      token,
+      title: 'Nouvelle Demande de Sang',
+      body: `${userName} a fait une demande de sang pour le groupe sanguin ${demande.groupeSanguin || 'inconnu'}.`
+    };
+
+    // Envoyer la notification
+    await this.notificationsService.createDemande(notificationData);
+
+  } catch (error) {
+    console.error('Erreur lors de l\'ajout de la demande:', error);
+    throw error;
   }
+}
+
+
   //mise a jour de la demande
   async updateDemande(id:string,demande:Partial<Demande>){
     try {
