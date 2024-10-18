@@ -23,7 +23,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     nom: "",
     prenom: "",
     dateNaissance: "",
-    telephone: "",
+    numeroTelephone: "",
     localisation: "",
     role: "admin centre",
     groupeSanguin: "A+",
@@ -67,10 +67,12 @@ export class UserFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['utilisateur'] && this.utilisateur) { // Vérifiez si utilisateur est défini
+    if (changes['utilisateur'] && this.utilisateur) {
       this.initForm(); // Réinitialiser le formulaire si les données changent
+      this.userForm.patchValue(this.utilisateur); // Remplir le formulaire avec les nouvelles données
     }
   }
+  
 
   initForm() {
     if (this.utilisateur) { // Vérifiez si utilisateur est défini
@@ -78,7 +80,7 @@ export class UserFormComponent implements OnInit, OnChanges {
         nom: [this.utilisateur.nom || '', Validators.required],
         prenom: [this.utilisateur.prenom || '', Validators.required],
         dateNaissance: [this.utilisateur.dateNaissance || '', Validators.required],
-        telephone: [this.utilisateur.telephone || '', Validators.required],
+        numeroTelephone: [this.utilisateur.numeroTelephone || '', Validators.required],
         email: [this.utilisateur.email || '', [Validators.required, Validators.email]],
         localisation: [this.utilisateur.localisation || '', Validators.required],
         role: [this.utilisateur.role || '', Validators.required],
@@ -93,7 +95,7 @@ export class UserFormComponent implements OnInit, OnChanges {
         nom: ['', Validators.required],
         prenom: ['', Validators.required],
         dateNaissance: ['', Validators.required],
-        telephone: ['', Validators.required],
+        numeroTelephone: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         localisation: ['', Validators.required],
         role: ['', Validators.required],
@@ -106,13 +108,15 @@ export class UserFormComponent implements OnInit, OnChanges {
     }
   }
 //
-  onSubmit(){
-    if(this.userForm.valid){
-      this.formSubmit.emit(this.userForm.value)
-    }else{
-      console.error('le formulaire n\'est pas valid');
-    }
-   }
+onSubmit() {
+  if (this.userForm.valid) {
+    console.log('Formulaire soumis avec succès:', this.userForm.value);
+    this.formSubmit.emit(this.userForm.value);
+  } else {
+    console.error('Le formulaire n\'est pas valide:', this.userForm.errors);
+  }
+}
+
    //
   onRoleChange() {
     const roleControl = this.userForm.get('role');

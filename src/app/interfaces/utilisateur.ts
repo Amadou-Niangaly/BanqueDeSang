@@ -10,10 +10,10 @@ export interface Utilisateur {
     dateDernierDon?: Date; 
     nombreDons?: number; 
     statutVerification?: 'Vérifié' | 'Non vérifié'; 
-    telephone?: string; 
+    numeroTelephone?: string; 
     hopitalId?: string; // Référence à l'hôpital si applicable
     centreId?: string; // Référence au centre de don si applicable
     password:string;
     dateNaissance?:string;
-    token?: string;
+    fcm_token?: string;
 }

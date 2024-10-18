@@ -41,18 +41,21 @@ async addUtilisateur(utilisateur: Utilisateur): Promise<void> {
     // Créez un document avec l'UID comme identifiant
     const userDocRef = doc(this.firestore, 'utilisateurs', userCredential.user.uid);
     
-    // Assurez-vous que toutes les données nécessaires sont présentes, y compris le token
+    // Vérifie que le fcm_token est défini, sinon assigne une valeur par défaut
+    const fcmToken = utilisateur.fcm_token || ''; // Ou null, selon tes besoins
+
+    // Assurez-vous que toutes les données nécessaires sont présentes
     await setDoc(userDocRef, {
       id: userCredential.user.uid,
       email: utilisateur.email,
       nom: utilisateur.nom,
       prenom: utilisateur.prenom,
       dateNaissance: utilisateur.dateNaissance,
-      telephone: utilisateur.telephone,
+      numeroTelephone: utilisateur.numeroTelephone,
       localisation: utilisateur.localisation,
       role: utilisateur.role,
       groupeSanguin: utilisateur.groupeSanguin,
-      token: utilisateur.token, // Ajoutez le token ici
+      fcm_token: fcmToken, // Utilise la valeur vérifiée ici
       centreId: utilisateur.centreId || '',
       hopitalId: utilisateur.hopitalId || ''
     });

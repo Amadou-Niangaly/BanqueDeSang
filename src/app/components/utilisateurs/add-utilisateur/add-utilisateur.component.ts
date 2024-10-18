@@ -27,7 +27,7 @@ export class AddUtilisateurComponent implements OnInit {
          nom:['',Validators.required],
          prenom:['',Validators.required],
          dateNaissance:['',Validators.required],
-         telephone: ['', Validators.required],
+         numeroTelephone: ['', Validators.required],
          email:['',[Validators.required,Validators.email]],
          localisation: ['', Validators.required],
          role: ['donneur', Validators.required], 
@@ -35,21 +35,25 @@ export class AddUtilisateurComponent implements OnInit {
       });
   }
 
-    // Méthode pour soumettre le formulaire
-    onSubmit(userData: any) {
-      this.notificationsService.requestPermission().then((token) => {
-        userData.token = token; // Ajoutez le token à userData
-        this.utilisateurService.addUtilisateur(userData)
-          .then(() => {
-            console.log('Utilisateur ajouté avec succès!');
-            this.router.navigate(['dashboard/utilisateurs']);
-          })
-          .catch((error) => {
-            console.error('Erreur lors de l\'ajout de l\'utilisateur :', error);
-          });
-      });
-    }
-    
+
+  // Méthode pour soumettre le formulaire
+  onSubmit(userData: any) {
+    // Récupérer le token FCM et l'ajouter à userData
+    this.notificationsService.requestPermission().then((token) => {
+      userData.fcm_token = token; // Ajoutez le token FCM à userData
+      this.utilisateurService.addUtilisateur(userData)
+        .then(() => {
+          console.log('Utilisateur ajouté avec succès!');
+          this.router.navigate(['dashboard/utilisateurs']);
+        })
+        .catch((error) => {
+          console.error('Erreur lors de l\'ajout de l\'utilisateur :', error);
+        });
+    }).catch((error) => {
+      console.error('Erreur lors de la récupération du token FCM :', error);
+    });
+  }
+  
     }
     
 

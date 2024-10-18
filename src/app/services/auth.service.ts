@@ -45,12 +45,18 @@ export class AuthService {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log('Inscription réussie:', userCredential.user);
-      return userCredential.user;
+  
+      // Déconnecter immédiatement après la création
+      await signOut(auth);
+      console.log('Utilisateur déconnecté immédiatement après l\'inscription');
+      
+      return userCredential.user; // Optionnel : tu pourrais aussi retourner un message ou rien du tout
     } catch (error) {
       console.error('Erreur d\'inscription:', error);
       throw error;
     }
   }
+  
 
   async logout(): Promise<void> {
     try {
