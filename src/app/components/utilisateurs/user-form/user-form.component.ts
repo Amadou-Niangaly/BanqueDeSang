@@ -110,12 +110,19 @@ export class UserFormComponent implements OnInit, OnChanges {
 //
 onSubmit() {
   if (this.userForm.valid) {
-    console.log('Formulaire soumis avec succès:', this.userForm.value);
+    console.log('Formulaire valide:', this.userForm.value);
     this.formSubmit.emit(this.userForm.value);
   } else {
-    console.error('Le formulaire n\'est pas valide:', this.userForm.errors);
+    console.error('Le formulaire contient des erreurs :');
+    Object.keys(this.userForm.controls).forEach(key => {
+      const controlErrors = this.userForm.get(key)?.errors;
+      if (controlErrors) {
+        console.error(`Erreur dans le champ ${key}:`, controlErrors);
+      }
+    });
   }
 }
+
 
    //
   onRoleChange() {

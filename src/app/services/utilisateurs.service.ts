@@ -128,5 +128,21 @@ async addUtilisateur(utilisateur: Utilisateur): Promise<void> {
       return null;
     }
   }
-  
+  // Méthode pour mettre à jour le token FCM
+  async updateFcmToken(token: string): Promise<void> {
+    const userId = this.auth.currentUser?.uid; // Obtenir l'UID de l'utilisateur actuel
+    if (!userId) {
+      console.error('Aucun utilisateur connecté pour mettre à jour le token FCM.');
+      return;
+    }
+
+    const docRef = doc(this.firestore, 'utilisateurs', userId);
+    try {
+      await updateDoc(docRef, { fcm_token: token }); // Met à jour le token FCM
+      console.log('Token FCM mis à jour avec succès');
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du token FCM:', error);
+      throw error;
+    }
+  }
 }
