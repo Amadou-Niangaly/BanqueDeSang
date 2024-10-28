@@ -10,7 +10,7 @@ import { getMessaging, getToken } from "firebase/messaging";
   storageBucket: "banque-sang-8dc2b.appspot.com",
   messagingSenderId: "549004100569",
   appId: "1:549004100569:web:ef063a06c670480fa18fc8",
-  vapidkey:"BBWxHZ0iT_53R7yA6Optckw1Q1jSWL3BLsX3cY5W8PGpSo7szY2gEwE4HGeiTa6h_8WNqMiL0LPoJuG9F7Jp9qQ"
+  vapidkey:"BJX95_v8pC81FjOq4dQWuEQy0y7O-ZQYIzJcbcFuCuUcK8K0qV_bayZ3mcDTL7_inmBKrvrKHSqK4tQkrNUB3Xs"
 };
 
 // Initialize Firebase
@@ -18,7 +18,25 @@ import { getMessaging, getToken } from "firebase/messaging";
 
  // Initialize Firebase Cloud Messaging and get a reference to the service
 const messaging = getMessaging(app)
-getToken(messaging, {vapidKey: ""});
+
+// Add the public key generated from the console here.
+getToken(messaging, { vapidKey: 'BJX95_v8pC81FjOq4dQWuEQy0y7O-ZQYIzJcbcFuCuUcK8K0qV_bayZ3mcDTL7_inmBKrvrKHSqK4tQkrNUB3Xs' }).then((currentToken) => {
+  if (currentToken) {
+    // Send the token to your server and update the UI if necessary
+    // ...
+    console.log(currentToken);
+  } else {
+    // Show permission request UI
+    console.log('No registration token available. Request permission to generate one.');
+    // ...
+  }
+}).catch((err) => {
+  console.log('An error occurred while retrieving token. ', err);
+  // ...
+});
+
+
+
 
 
 

@@ -13,35 +13,39 @@ import { NotificationsService } from './services/notifications.service';
 })
 export class AppComponent implements OnInit {
   title = 'BS-Frontend';
-  messaging = getMessaging(); // Correction de l'initialisation
-
-  constructor(private notificationsService: NotificationsService) {}
 
   ngOnInit(): void {
     this.requestPermission();
   }
 
   requestPermission() {
+    console.log('Requesting permission...');
     Notification.requestPermission().then((permission) => {
       if (permission === 'granted') {
         console.log('Notification permission granted.');
-
-        // Obtenez le token FCM
-        getToken(this.messaging, { vapidKey: firebaseConfig.vapidkey}).then((currentToken) => { // Utilisation correcte de firebaseConfig
-          if (currentToken) {
-            console.log('Token de notification:', currentToken);
-            // Envoyez ce token à votre serveur pour l'utiliser dans l'envoi de notifications
-          } else {
-            console.log('No registration token available. Request permission to generate one.');
-          }
-        }).catch((err) => {
-          console.error('An error occurred while retrieving token. ', err);
-        });
+        this.retrieveFCMToken(); // Appel pour récupérer le token FCM
       } else {
-        console.log('Unable to get permission to notify.');
+        console.log('Notification permission denied.');
       }
+    }).catch((err) => {
+      console.error('Error while requesting notification permission:', err);
     });
-    this.notificationsService.init();
   }
-  
+
+  // Méthode pour récupérer le token FCM
+  retrieveFCMToken() {
+    const messaging = getMessaging();
+    getToken(messaging, { vapidKey: firebaseConfig.vapidkey }) // Utilise la clé VAPID correcte ici
+      .then((currentToken) => {
+        if (currentToken) {
+          console.log('Token de notification:', currentToken);
+          // Ici, tu peux envoyer le token à ton serveur ou le stocker
+        } else {
+          console.log('No registration token available. Request permission to generate one.');
+        }
+      })
+      .catch((err) => {
+        console.error('An error occurred while retrieving token: ', err);
+      });
+  }
 }
