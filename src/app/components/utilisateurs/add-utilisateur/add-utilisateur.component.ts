@@ -39,7 +39,7 @@ export class AddUtilisateurComponent implements OnInit {
   // Méthode pour soumettre le formulaire
   onSubmit(userData: any) {
     // Récupérer le token FCM et l'ajouter à userData
-    this.notificationsService.requestPermission().then((token) => {
+    this.notificationsService.getToken().then((token) => {
       userData.fcm_token = token; // Ajoutez le token FCM à userData
       this.utilisateurService.addUtilisateur(userData)
         .then(() => {

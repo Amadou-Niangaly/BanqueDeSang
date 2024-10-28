@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { firebaseConfig } from '../config/firebase-config';
+import { doc, Firestore, getDoc, getFirestore, updateDoc } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+
+// Initialisez l'application Firebase
+const app = initializeApp(firebaseConfig);
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationsService {
   private messaging;
+  private firestore: Firestore;
 
   constructor() {
-    this.messaging = getMessaging();
+    this.firestore = getFirestore(app); // Assurez-vous que 'app' est correctement initialisé
+    this.messaging = getMessaging(app);
     this.init(); // Initialiser l'écouteur de messages
-    this.checkNotificationPermission(); // Vérifier la permission de notification au démarrage
   }
 
   init() {
@@ -30,54 +36,61 @@ export class NotificationsService {
     });
   }
 
-  // Méthode pour vérifier la permission de notification et obtenir le token
-  async checkNotificationPermission(): Promise<string> {
-    if (Notification.permission === 'granted') {
-      console.log('Permission déjà accordée.');
-      return this.getToken();
-    } else if (Notification.permission === 'denied') {
-      console.log('Permission refusée. Les notifications ne peuvent pas être envoyées.');
-      return Promise.reject('Permission refusée');
-    } else {
-      return this.requestPermission(); // Demande la permission
+  // Demande de permission pour les notifications
+  async requestPermission() {
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        this.getToken(); // Obtenir le token après avoir accordé la permission
+      } else {
+        console.warn('Permission de notification refusée');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la demande de permission:', error);
     }
   }
 
-  // Méthode pour demander la permission de recevoir des notifications
-  public requestPermission(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      Notification.requestPermission().then((permission) => {
-        if (permission === 'granted') {
-          console.log('Permission de notification accordée.');
-          resolve(this.getToken()); // Obtient le token FCM si la permission est accordée
-        } else {
-          console.log('Permission de notification refusée.');
-          reject('Permission refusée');
-        }
-      }).catch((err) => {
-        console.error('Erreur lors de la demande de permission:', err);
-        reject(err);
-      });
-    });
+  // Obtenir le jeton FCM
+ // notifications.service.ts
+async getToken(): Promise<string | null> {
+  try {
+    const currentToken = await getToken(this.messaging);
+    if (currentToken) {
+      console.log('Token FCM récupéré:', currentToken);
+      return currentToken; // Retourner le token FCM
+    } else {
+      console.log('Aucun token FCM disponible. Demandez l\'autorisation pour générer un token.');
+      return null; // Retourner null si aucun token n'est disponible
+    }
+  } catch (error) {
+    console.error('Erreur lors de la récupération du token FCM:', error);
+    return null; // Retourner null en cas d'erreur
   }
+}
 
-  // Méthode pour obtenir le token FCM
-  public getToken(): Promise<string> {
-    return getToken(this.messaging, { vapidKey: firebaseConfig.vapidkey })
-      .then((currentToken) => {
-        if (currentToken) {
-          console.log('Token de notification:', currentToken);
-          // Ici, tu peux sauvegarder le token dans Firestore
-          return currentToken;
-        } else {
-          console.log('Aucun token d\'inscription disponible. Demandez la permission pour en générer un.');
-          return Promise.reject('Aucun token disponible.');
-        }
-      })
-      .catch((err) => {
-        console.error('Une erreur est survenue lors de la récupération du token:', err);
-        return Promise.reject(err);
-      });
+
+  // Mise à jour du token FCM de l'utilisateur
+  async updateFCMToken(uid: string, fcmToken: string) {
+    try {
+      console.log('Token FCM obtenu:', fcmToken);
+  
+      // Obtenir le document de l'utilisateur depuis Firestore
+      const userDoc = doc(this.firestore, 'utilisateurs', uid);
+      const userSnapshot = await getDoc(userDoc);
+  
+      // Vérifier si le token FCM existant est le même
+      const existingToken = userSnapshot.exists() ? userSnapshot.data()['fcm_token'] : null;
+  
+      if (existingToken !== fcmToken) {
+        // Mettre à jour Firestore avec le nouveau token
+        await updateDoc(userDoc, { fcm_token: fcmToken });
+        console.log('Token FCM mis à jour dans Firestore');
+      } else {
+        console.log('Le token FCM est déjà à jour.');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du token FCM:', error);
+    }
   }
 
   async createDemande(notificationData: { token: string; title: string; body: string; }) {
@@ -91,7 +104,7 @@ export class NotificationsService {
       });
   
       if (!response.ok) {
-        const errorDetails = await response.json(); // Récupérer les détails de l'erreur
+        const errorDetails = await response.json();
         throw new Error(`Erreur lors de l'envoi de la notification: ${response.statusText} - ${errorDetails.message}`);
       }
   
@@ -99,11 +112,10 @@ export class NotificationsService {
       console.log('Notification envoyée avec succès:', responseData);
     } catch (error) {
       console.error('Erreur lors de l\'envoi de la notification:', error);
-      // Gérer l'erreur ici, par exemple, en informant l'utilisateur ou en supprimant le token si nécessaire
     }
   }
-  
-  // Méthode pour afficher une notification
+
+  // Afficher une notification
   showNotification(title: string, body: string) {
     if (Notification.permission === 'granted') {
       new Notification(title, {

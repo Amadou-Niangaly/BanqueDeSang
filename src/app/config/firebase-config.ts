@@ -20,20 +20,18 @@ import { getMessaging, getToken } from "firebase/messaging";
 const messaging = getMessaging(app)
 
 // Add the public key generated from the console here.
-getToken(messaging, { vapidKey: 'BJX95_v8pC81FjOq4dQWuEQy0y7O-ZQYIzJcbcFuCuUcK8K0qV_bayZ3mcDTL7_inmBKrvrKHSqK4tQkrNUB3Xs' }).then((currentToken) => {
-  if (currentToken) {
-    // Send the token to your server and update the UI if necessary
-    // ...
-    console.log(currentToken);
-  } else {
-    // Show permission request UI
-    console.log('No registration token available. Request permission to generate one.');
-    // ...
-  }
-}).catch((err) => {
-  console.log('An error occurred while retrieving token. ', err);
-  // ...
-});
+// getToken(messaging, { vapidKey: 'BJX95_v8pC81FjOq4dQWuEQy0y7O-ZQYIzJcbcFuCuUcK8K0qV_bayZ3mcDTL7_inmBKrvrKHSqK4tQkrNUB3Xs' })
+//     .then((currentToken) => {
+//         if (currentToken) {
+//             console.log("Jeton actuel : ", currentToken);
+//             // Envoyez ce jeton à votre serveur ou enregistrez-le
+//         } else {
+//             console.log('Aucun jeton d\'enregistrement disponible. Demandez la permission pour en générer un.');
+//         }
+//     })
+//     .catch((err) => {
+//         console.log('Une erreur est survenue lors de la récupération du jeton : ', err);
+//     });
 
 
 
