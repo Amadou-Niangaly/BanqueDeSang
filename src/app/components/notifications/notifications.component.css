@@ -1,68 +1,73 @@
 .container {
-    position: fixed;
-    top: 25%;
-    left: 85%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 10px;
-  }
-  
-  .modal-title {
-    margin: 0;
-    font-size: 20px;
-    color: #333;
-  }
-  
-  .close {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #999;
-    cursor: pointer;
-    transition: color 0.3s ease;
-  }
-  
-  .close:hover {
-    color: rgb(255, 0, 0);
-  }
-  
-  .modal-body {
-    margin-top: 15px;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-  
-  .modal-body ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .modal-body li {
-    padding: 10px;
-    border-bottom: 1px solid #e0e0e0;
-    color: #555;
-  }
-  
-  .modal-body li:last-child {
-    border-bottom: none;
-  }
-  
-  body {
-    background-color: rgba(0, 0, 0, 0.5); /* Assombrit l'arrière-plan */
-    overflow: hidden; /* Empêche le défilement du corps lorsqu'un modal est actif */
-  }
-  
+  position: fixed;
+  top: 40%; /* Centre verticalement */
+  left: 80%; /* Centre horizontalement */
+  transform: translate(-50%, -50%); /* Ajuste la position pour centrer */
+  width: 400px; /* Largeur fixe du modal */
+  max-height: 80%; /* Limite la hauteur maximale */
+  background-color: white; /* Couleur de fond */
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre */
+  z-index: 1000; /* Assure que le modal est au-dessus des autres éléments */
+  display: flex;
+  flex-direction: column; /* Permet d'aligner les éléments verticalement */
+}
+
+.modal-body {
+  margin-top: 15px; /* Espacement en haut */
+  overflow-y: auto; /* Ajoute un défilement si le contenu dépasse la hauteur */
+  flex-grow: 1; /* Permet à la section du corps de prendre tout l'espace disponible */
+  max-height: 300px; /* Limite la hauteur pour que le bouton de fermeture soit visible */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+  padding-top: 10px; /* Ajoute un peu d'espace en haut */
+}
+
+/* Autres styles inchangés */
+
+
+.modal-body {
+  margin-top: 15px; /* Espacement en haut */
+  overflow-y: auto; /* Ajoute un défilement si le contenu dépasse la hauteur */
+  flex-grow: 1; /* Permet à la section du corps de prendre tout l'espace disponible */
+}
+
+.close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close:hover {
+  color: rgb(255, 0, 0);
+}
+
+.modal-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal-body li {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #555;
+}
+
+.modal-body li:last-child {
+  border-bottom: none;
+}
+
+body {
+  background-color: rgba(0, 0, 0, 0.5); /* Assombrit l'arrière-plan */
+  overflow: hidden; /* Empêche le défilement du corps lorsqu'un modal est actif */
+}

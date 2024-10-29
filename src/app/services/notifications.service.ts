@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { firebaseConfig } from '../config/firebase-config';
-import { doc, Firestore, getDoc, getFirestore, updateDoc } from 'firebase/firestore';
+import { collection, doc, Firestore, getDoc, getDocs, getFirestore, updateDoc, } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
+import { Observable } from 'rxjs';
 
 // Initialisez l'application Firebase
 const app = initializeApp(firebaseConfig);
@@ -66,6 +67,7 @@ async getToken(): Promise<string | null> {
     console.error('Erreur lors de la récupération du token FCM:', error);
     return null; // Retourner null en cas d'erreur
   }
+
 }
 
 
@@ -114,7 +116,21 @@ async getToken(): Promise<string | null> {
       console.error('Erreur lors de l\'envoi de la notification:', error);
     }
   }
-
+  
+   //  obtenir les demandes
+   async getNotifications() {
+    const coll = collection(this.firestore, 'notifications');
+    try {
+      const snapshot = await getDocs(coll);
+      return snapshot.docs.map(doc => ({
+        id: doc.id, // Inclut l'ID du document
+        ...doc.data() // Ajoute les données du document
+      }));
+    } catch (error) {
+      console.error('Erreur de connexion à Firebase:', error);
+      throw error;
+    }
+  }
   // Afficher une notification
   showNotification(title: string, body: string) {
     if (Notification.permission === 'granted') {

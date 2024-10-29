@@ -7,10 +7,13 @@
   </div>
   <div class="modal-body">
     <ul>
-      <li *ngFor="let notification of notifications">
-        {{ notification.message }} - {{ notification.date | date:'short' }}
+      <li *ngFor="let notif of notification">
+        <h6>{{ notif.title }}</h6>
+        <p>{{ notif.body }}</p>
+        <p *ngIf="notif.bloodGroup">Groupe sanguin : {{ notif.bloodGroup }}</p>
+        <p *ngIf="notif.quantity">Quantité : {{ notif.quantity }} poche(s)</p>
+        <p>Date : {{ notif.timestamp?.toDate() | date:'short' }}</p>
       </li>
     </ul>
   </div>
 </div>
-  
