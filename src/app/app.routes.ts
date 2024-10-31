@@ -23,6 +23,7 @@ import { AppComponent } from './app.component';
 import { AddDonComponent } from './components/dons/add-don/add-don.component';
 import { UpdateCentreComponent } from './components/centre-don/update-centre/update-centre.component';
 import { DashboardLayoutComponentComponent } from './components/dashboard-layout-component/dashboard-layout-component.component';
+import { FormMaladieComponent } from './components/maladies/form-maladie/form-maladie.component';
 
 
 export const routes: Routes = [
@@ -49,6 +50,7 @@ export const routes: Routes = [
         { path: 'demandes', component: DemandesComponent },
         { path: 'centre-dons', component: CentreDonComponent },
         { path: 'hopitaux', component: HopitauxComponent },
+        { path: 'maladie', component: FormMaladieComponent },
         { path: 'stocks', component: StocksComponent },
         { path: 'add-user', component: AddUtilisateurComponent },
         { path: 'edit-user/:id', component: UpdateUtilisateurComponent },

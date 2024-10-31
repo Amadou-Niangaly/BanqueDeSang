@@ -1,0 +1,46 @@
+<div class="container">
+    <form [formGroup]="maladieForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col">
+            <label for="nom">Nom de la Maladie</label>
+            <input type="text" id="nom" class="form-control" formControlName="nom" placeholder="Nom de la maladie">
+          </div>
+          <div class="col">
+            <label for="lien">Lien</label>
+            <input type="url" id="lien" class="form-control" formControlName="lien" placeholder="Lien vers plus d'informations">
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <label for="definition">Définition</label>
+            <textarea id="definition" class="form-control" formControlName="definition" placeholder="Définition de la maladie"></textarea>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <label for="symptome">Symptômes</label>
+            <textarea id="symptome" class="form-control" formControlName="symptome" placeholder="Liste des symptômes"></textarea>
+          </div>
+          <div class="col">
+            <label for="diagnostic">Diagnostic</label>
+            <textarea id="diagnostic" class="form-control" formControlName="diagnostic" placeholder="Méthodes de diagnostic"></textarea>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <label for="traitement">Traitement</label>
+            <textarea id="traitement" class="form-control" formControlName="traitement" placeholder="Options de traitement"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="photo">Photo</label>
+            <input type="file" id="photo" class="form-control" (change)="onFileChange($event)" accept="image/*">
+          </div>
+        </div>
+      
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+      </form>
+      
+</div>

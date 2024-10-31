@@ -1,39 +1,39 @@
 <div class="container"> 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3>Liste des hopitaux</h3>
-        <button class="btn btn-danger" routerLink="/dashboard/add-hopital">Ajouter +</button>
+        <!-- <h3>Liste des hopitaux</h3> -->
+        <button class="btn btn-danger" routerLink="/dashboard/maladie">Ajouter +</button>
     </div>
-    <div>
+    <!-- <div>
         <app-serch-section (searchChanged)="onSearchTextChange($event)"></app-serch-section>
-    </div>
+    </div> -->
     <div></div>
-        <table class="table">
+        <!-- <table class="table">
             <thead>
               <tr>
-                <!-- <th scope="col">ID</th> -->
+              
                 <th scope="col">Nom</th>
                 <th scope="col">Adresse</th>
                 <th scope="col">Coordonnées GPS</th>
                 <th scope="col">Telephone</th>
                 <th scope="col">Heure Ouverture</th>
-                <!-- <th scope="col">Stock Actuel</th> -->
+             
                 <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let h of hopitaux |filter:searchText" >
-                <!-- <th scope="row">{{h.id}}</th> -->
+             
                 <td>{{h.nom}}</td>
                 <td>{{h.adresse}}</td>
                 <td>{{h.localisation}}</td>
                 <td>{{h.telephone}}</td>
                 <td>{{h.heureOuverture}}</td>
-                <!-- <td>{{h.stockActuel}}</td> -->
+           
                 <td>
                     <button class="btn btn-outline-primary me-2"><i class="bi bi-pencil" routerLink="/dashboard/edit-hopital/{{h.id}}"></i></button>
                     <button class="btn btn-outline-danger" (click)="deleteHopital(h.id)"><i class="bi bi-trash3"></i></button>
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
     </div>

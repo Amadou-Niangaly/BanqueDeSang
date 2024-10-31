@@ -22,7 +22,7 @@
         <a *ngIf="user?.role === 'admin' || user?.role === 'admin hopital' || user?.role ==='admin'" routerLink="/dashboard/demandes"><i class="bi bi-envelope-arrow-up"></i> Demandes</a>
       
         <!-- Visibilité pour l'admin et admin hôpital -->
-        <a *ngIf="user?.role === 'admin' || user?.role === 'admin hopital'" routerLink="/dashboard/hopitaux"><i class="bi bi-hospital"></i> Hôpitaux</a>
+        <a *ngIf="user?.role === 'admin' || user?.role === 'admin hopital'" routerLink="/dashboard/maladie"><i class="bi bi-hospital"></i> Maladie</a>
       
         <!-- Visibilité pour tous les rôles -->
         <a *ngIf="user?.role === 'admin' || user?.role === 'admin centre' || user?.role === 'admin hopital'" routerLink="/dashboard/stocks"><i class="bi bi-bar-chart"></i> Stocks</a>
